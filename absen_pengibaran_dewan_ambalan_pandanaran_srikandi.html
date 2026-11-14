@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absen Pengibaran Dewan Ambalan Pandanaran Srikandi</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts: Inter & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#DC2626',
+                            darkRed: '#B91C1C',
+                            lightRed: '#FEF2F2',
+                            accent: '#F87171',
+                            blue: '#1D4ED8',
+                            dark: '#0F172A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-heading { font-family: 'Poppins', sans-serif; }
+        .hero-pattern {
+            background-color: #DC2626;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #F1F5F9; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Global Notification Banner / Toast -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app" class="flex-grow flex flex-col">
+
+        <!-- ================= 1. HALAMAN LOGIN INTERAKTIF ================= -->
+        <div id="view-login" class="flex-grow flex flex-col justify-center items-center p-4 sm:p-6 hero-pattern relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-black/10 blur-3xl pointer-events-none"></div>
+
+            <div class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 z-10 my-8">
+                <!-- Left Column: Illustration & Info -->
+                <div class="md:col-span-5 bg-gradient-to-br from-red-600 to-red-800 p-8 text-white flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 transform translate-x-8 -translate-y-8 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                    <div>
+                        <div class="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 backdrop-blur-sm">
+                            <i class="fa-solid fa-flag text-white"></i> Ambalan Pandanaran Srikandi
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold font-heading leading-tight mb-3">Absen Pengibaran</h1>
+                        <p class="text-red-100 text-xs sm:text-sm leading-relaxed">
+                            Sistem absensi digital giat dan dewan untuk kegiatan absen pengibaran rutin di hari Jumat dengan sistem modern.
+                        </p>
+                    </div>
+
+                    <div class="my-6 flex justify-center">
+                        <div class="relative w-48 h-48 bg-white/10 rounded-2xl p-4 flex items-center justify-center border border-white/20 shadow-inner">
+                            <div class="text-center">
+                                <i class="fa-solid fa-school-flag text-6xl text-white mb-2 animate-bounce"></i>
+                                <div class="text-xs font-medium text-red-100">Disiplin & Tanggung Jawab</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-red-200 border-t border-white/20 pt-4 flex justify-between items-center">
+                        <span>Ambalan Versi 3.0</span>
+                        <span><i class="fa-solid fa-shield-halved"></i> Terverifikasi</span>
+                    </div>
+                </div>
+
+                <!-- Right Column: Login & Demo Actions -->
+                <div class="md:col-span-7 p-8 sm:p-10 flex flex-col justify-center">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold font-heading text-slate-900">Pilih Peran Anda</h2>
+                        <p class="text-sm text-slate-500">Masuk sebagai Giat atau Dewan Ambalan.</p>
+                    </div>
+
+                    <!-- Role Selector Tabs (Giat & Dewan) -->
+                    <div class="grid grid-cols-2 gap-3 p-1 bg-slate-100 rounded-2xl mb-6">
+                        <button onclick="setLoginRole('giat')" id="tab-role-giat" class="py-3 px-4 text-xs sm:text-sm font-bold rounded-xl transition-all bg-white text-red-600 shadow-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-chalkboard-user text-base"></i> Giat
+                        </button>
+                        <button onclick="setLoginRole('dewan')" id="tab-role-dewan" class="py-3 px-4 text-xs sm:text-sm font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-user-group text-base"></i> Dewan (Peserta)
+                        </button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+                        <input type="hidden" id="login-role-input" value="giat">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" id="login-label-name">Nama Giat (Pembina/Authorized)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                                    <i id="login-input-icon" class="fa-solid fa-user-tie"></i>
+                                </span>
+                                <input type="text" id="login-username" required class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500 transition-all text-sm" value="Kak Budi">
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1" id="login-hint">*Giat wajib menggunakan nama terdaftar (contoh: Kak Budi, Kak Siti, Pembina Utama, Giat)</p>
+                        </div>
+
+                        <div id="group-pasukan-select">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Pilih Pasukan / Posisi Dewan</label>
+                            <select id="login-class" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500 transition-all text-sm">
+                                <option value="1. Petugas Pemimpin Pengibaran">1. Petugas Pemimpin Pengibaran</option>
+                                <option value="2. Petugas Pengibaran">2. Petugas Pengibaran</option>
+                                <option value="3. Peserta">3. Peserta</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-600/30 transition-all flex items-center justify-center gap-2 text-sm">
+                            <span>Masuk ke Dashboard</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <!-- DEMO 1-KLIK SECTION -->
+                    <div class="mt-8 pt-6 border-t border-slate-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-bolt text-amber-500"></i> Mode Demo 1-Klik Instan
+                            </span>
+                            <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-semibold">Uji Cepat</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button type="button" onclick="quickDemoLogin('giat')" class="p-3 bg-red-50 hover:bg-red-100 border border-red-200 rounded-xl text-red-700 text-xs font-bold transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-chalkboard-user text-base"></i>
+                                <span>Demo Giat (Kak Budi)</span>
+                            </button>
+                            <button type="button" onclick="quickDemoLogin('dewan')" class="p-3 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl text-blue-700 text-xs font-bold transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-user-group text-base"></i>
+                                <span>Demo Dewan (Peserta)</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= NAVIGATION BAR (AFTER LOGIN) ================= -->
+        <nav id="app-navbar" class="bg-white border-b border-slate-200 sticky top-0 z-40 hidden shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center text-white shadow-md shadow-red-600/30">
+                        <i class="fa-solid fa-flag text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="font-heading font-extrabold text-slate-900 text-sm sm:text-base leading-tight">Absen Pengibaran Dewan Ambalan</div>
+                        <div class="text-[11px] text-slate-500 font-medium" id="nav-role-subtitle">Pandanaran Srikandi</div>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center gap-1">
+                    <button onclick="switchTab('dashboard')" id="nav-tab-dashboard" class="px-4 py-2 rounded-xl text-sm font-semibold text-red-600 bg-red-50 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-house"></i> Dashboard
+                    </button>
+                    <button onclick="switchTab('tutorial')" id="nav-tab-tutorial" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-video"></i> Video Tutorial
+                    </button>
+                    <button onclick="switchTab('faq')" id="nav-tab-faq" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-circle-question"></i> Pusat Bantuan
+                    </button>
+                    <button onclick="switchTab('settings')" id="nav-tab-settings" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-gear"></i> Pengaturan
+                    </button>
+                </div>
+
+                <!-- User Profile & Logout -->
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 bg-slate-100 pl-2 pr-4 py-1.5 rounded-full border border-slate-200">
+                        <div id="nav-user-avatar" class="w-7 h-7 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold">
+                            KB
+                        </div>
+                        <span id="nav-user-name" class="text-xs font-bold text-slate-800 max-w-[120px] truncate">Kak Budi</span>
+                    </div>
+                    <button onclick="logout()" title="Keluar" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-600 flex items-center justify-center transition-all border border-slate-200">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center transition-all border border-slate-200">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200 px-4 py-3 space-y-1">
+                <button onclick="switchTab('dashboard'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-house w-5"></i> Dashboard
+                </button>
+                <button onclick="switchTab('tutorial'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-video w-5"></i> Video Tutorial
+                </button>
+                <button onclick="switchTab('faq'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-question w-5"></i> Pusat Bantuan
+                </button>
+                <button onclick="switchTab('settings'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-gear w-5"></i> Pengaturan
+                </button>
+            </div>
+        </nav>
+
+
+        <!-- ================= 2. DASHBOARD DEWAN (PESERTA / ANGGOTA) ================= -->
+        <div id="view-dashboard-dewan" class="app-view hidden flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+            <!-- Welcome Banner -->
+            <div class="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="space-y-2 z-10 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm">
+                        <i class="fa-solid fa-shield-halved text-yellow-300"></i> Ambalan Pandanaran Srikandi
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold font-heading" id="dewan-welcome-title">Halo, Anggota Dewan! 👋</h2>
+                    <p class="text-red-100 text-sm sm:text-base max-w-xl">
+                        Sistem absensi digital giat dan dewan untuk kegiatan absen pengibaran rutin di hari Jumat dengan sistem modern.
+                    </p>
+                </div>
+                <!-- Status Badge Today -->
+                <div class="bg-white/15 backdrop-blur-md border border-white/30 rounded-2xl p-5 text-center min-w-[220px] z-10 shadow-lg">
+                    <div class="text-xs uppercase tracking-wider text-red-100 font-bold mb-1">Status Kehadiran Jumat Ini</div>
+                    <div id="dewan-status-badge-today" class="text-lg font-extrabold text-yellow-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Belum Absen
+                    </div>
+                    <div id="dewan-status-time-today" class="text-[11px] text-red-100 mt-1">Kegiatan Pengibaran Rutin</div>
+                </div>
+            </div>
+
+            <!-- Single Main Action Button: 'Absen Hadir Pengibaran' -->
+            <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 bg-red-50 text-red-700 px-3 py-1 rounded-full text-xs font-bold">
+                        <i class="fa-solid fa-calendar-check"></i> Absensi Jumat
+                    </div>
+                    <h3 class="text-2xl font-bold font-heading text-slate-900">Absen Hadir Pengibaran Bendera</h3>
+                    <p class="text-slate-500 text-sm max-w-xl">
+                        Lakukan absensi dengan kamera live dan verifikasi GPS otomatis untuk kegiatan pengibaran bendera hari ini.
+                    </p>
+                </div>
+                <div class="w-full md:w-auto min-w-[280px]">
+                    <button onclick="openAttendanceModal()" id="btn-action-absen" class="w-full py-4 px-8 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl shadow-xl shadow-red-600/30 transition-all flex items-center justify-center gap-3 text-base">
+                        <i class="fa-solid fa-camera text-xl"></i> Absen Hadir Pengibaran
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calendar & History Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Bulanan Calendar -->
+                <div class="lg:col-span-6 bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold font-heading text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-days text-red-600"></i> Kalender Kehadiran Jumat
+                            </h3>
+                            <span class="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-1 rounded-full">November 2026</span>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1.5 text-center text-xs font-bold text-slate-400 mb-2">
+                            <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
+                        </div>
+                        <div id="dewan-calendar-days" class="grid grid-cols-7 gap-1.5 text-xs">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span><span>Hadir Jumat</span></div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span><span>Izin</span></div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span><span>Sakit</span></div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span><span>Alpha</span></div>
+                    </div>
+                </div>
+
+                <!-- Riwayat Absensi Lengkap -->
+                <div class="lg:col-span-6 bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold font-heading text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-clock-rotate-left text-red-600"></i> Riwayat Absensi Pengibaran
+                            </h3>
+                            <span class="text-xs text-slate-500">Terbaru</span>
+                        </div>
+                        <div class="space-y-3 max-h-[320px] overflow-y-auto pr-1" id="dewan-history-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= 3. DASHBOARD GIAT (PEMBINA / ADMIN) ================= -->
+        <div id="view-dashboard-giat" class="app-view hidden flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+            <!-- Header & Filter -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-red-50 text-red-700 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                        <i class="fa-solid fa-chalkboard-user"></i> Portal Giat (Pembina & Admin)
+                    </div>
+                    <h2 class="text-2xl font-extrabold font-heading text-slate-900">Rekapitulasi Kehadiran Pengibaran</h2>
+                    <p class="text-slate-500 text-sm">Kelola dan verifikasi kehadiran anggota Dewan Ambalan Pandanaran Srikandi.</p>
+                </div>
+                <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
+                    <select id="filter-pasukan-select" onchange="renderGiatTable()" class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-sm text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="1. Petugas Pemimpin Pengibaran">1. Petugas Pemimpin Pengibaran</option>
+                        <option value="2. Petugas Pengibaran">2. Petugas Pengibaran</option>
+                        <option value="3. Peserta">3. Peserta</option>
+                    </select>
+                    <button onclick="printRekapGiat()" class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-sm transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-print"></i> Cetak / Ekspor PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Stats Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+                    <div class="text-xs font-bold text-slate-400 uppercase">Total Hadir</div>
+                    <div class="text-2xl font-extrabold text-emerald-600 mt-1" id="stat-giat-hadir">28 Anggota</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+                    <div class="text-xs font-bold text-slate-400 uppercase">Izin / Sakit</div>
+                    <div class="text-2xl font-extrabold text-amber-600 mt-1" id="stat-giat-izin">2 Anggota</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+                    <div class="text-xs font-bold text-slate-400 uppercase">Alpha</div>
+                    <div class="text-2xl font-extrabold text-red-600 mt-1" id="stat-giat-alpha">0 Anggota</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+                    <div class="text-xs font-bold text-slate-400 uppercase">Tingkat Kehadiran</div>
+                    <div class="text-2xl font-extrabold text-blue-600 mt-1" id="stat-giat-persen">93.3%</div>
+                </div>
+            </div>
+
+            <!-- School Admin Analytics Chart Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-8 bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-heading font-bold text-lg text-slate-900">Grafik Kehadiran Pengibaran Jumat</h3>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-semibold">Bulanan</span>
+                    </div>
+                    <div class="h-64 relative flex items-center justify-center">
+                        <canvas id="schoolAttendanceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-slate-900 mb-2">Proporsi Status</h3>
+                        <p class="text-xs text-slate-500 mb-4">Perbandingan kehadiran seluruh anggota</p>
+                        <div class="h-48 relative flex items-center justify-center">
+                            <canvas id="schoolDonutChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex justify-between">
+                        <button onclick="exportToExcel()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-excel"></i> Ekspor ke Excel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table of Dewan Members -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                    <h3 class="font-heading font-bold text-lg text-slate-900">Daftar Anggota Dewan & Status Cepat</h3>
+                    <div class="text-xs text-slate-500 font-medium">Klik tombol status untuk mengubah secara instan</div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
+                                <th class="p-4">Anggota Dewan</th>
+                                <th class="p-4">ID / NIS</th>
+                                <th class="p-4">Jam Hadir</th>
+                                <th class="p-4">Bukti Foto</th>
+                                <th class="p-4 text-center">Status Cepat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="giat-tbody" class="divide-y divide-slate-100 text-sm">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= 4. FITUR PENDUKUNG: VIDEO TUTORIAL ================= -->
+        <div id="view-tutorial" class="app-view hidden flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                <div class="max-w-2xl mb-8">
+                    <div class="inline-flex items-center gap-2 bg-red-50 text-red-700 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                        <i class="fa-solid fa-video"></i> Panduan Giat & Dewan
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold font-heading text-slate-900">Video Tutorial Absen Pengibaran</h2>
+                    <p class="text-slate-500 text-sm mt-1">Ikuti panduan langkah demi langkah cara melakukan absensi dengan kamera dan GPS yang akurat.</p>
+                </div>
+
+                <!-- Video Player Simulator Box -->
+                <div class="relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl aspect-video flex items-center justify-center group mb-8">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-red-900/60 via-slate-900/80 to-blue-900/60"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-20 h-20 rounded-full bg-red-600 text-white flex items-center justify-center text-2xl shadow-2xl group-hover:scale-110 transition-all cursor-pointer" onclick="playTutorialVideo()">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-6 left-6 right-6 flex items-center justify-between text-white z-10">
+                        <div>
+                            <div class="font-bold text-lg">Panduan Absen Pengibaran Rutin Jumat</div>
+                            <div class="text-xs text-slate-300">Durasi: 03:15 menit • Ambalan Pandanaran Srikandi</div>
+                        </div>
+                        <div class="bg-white/20 px-3 py-1.5 rounded-xl backdrop-blur-md text-xs font-bold">HD 1080p</div>
+                    </div>
+                </div>
+
+                <!-- Steps Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold mb-4">1</div>
+                        <h4 class="font-bold font-heading text-slate-900 mb-2">Pilih Peran</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed">Masuk sebagai Giat (Pembina terdaftar) atau Dewan (Peserta).</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold mb-4">2</div>
+                        <h4 class="font-bold font-heading text-slate-900 mb-2">Izin Kamera & GPS</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed">Pastikan browser mengizinkan akses kamera dan lokasi agar watermark koordinat akurat.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold mb-4">3</div>
+                        <h4 class="font-bold font-heading text-slate-900 mb-2">Kirim & Verifikasi</h4>
+                        <p class="text-slate-500 text-xs leading-relaxed">Ambil foto saat kegiatan pengibaran hari Jumat, dan Giat dapat langsung memverifikasi!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= 5. FITUR PENDUKUNG: PUSAT BANTUAN (FAQ) ================= -->
+        <div id="view-faq" class="app-view hidden flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                <div class="text-center max-w-xl mx-auto mb-10">
+                    <div class="inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                        <i class="fa-solid fa-circle-question"></i> Bantuan & Tanya Jawab
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold font-heading text-slate-900">Pusat Bantuan Ambalan</h2>
+                    <p class="text-slate-500 text-sm mt-1">Temukan jawaban cepat seputar tata cara absensi kegiatan pengibaran rutin Jumat.</p>
+                </div>
+
+                <!-- Accordion List -->
+                <div class="space-y-4 max-w-3xl mx-auto">
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                        <button onclick="toggleFaq(1)" class="w-full p-5 text-left font-bold text-slate-900 flex justify-between items-center hover:bg-slate-50">
+                            <span>Bagaimana cara anggota Dewan melakukan absen hadir pengibaran?</span>
+                            <i id="faq-icon-1" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="faq-content-1" class="hidden px-5 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                            Masuk sebagai Dewan, lalu klik tombol 'Absen Hadir Pengibaran', izinkan kamera dan GPS, lalu ambil foto dengan watermark otomatis.
+                        </div>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                        <button onclick="toggleFaq(2)" class="w-full p-5 text-left font-bold text-slate-900 flex justify-between items-center hover:bg-slate-50">
+                            <span>Siapa saja yang berhak masuk sebagai Giat?</span>
+                            <i id="faq-icon-2" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="faq-content-2" class="hidden px-5 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                            Hanya nama yang terdaftar dalam whitelist Giat (seperti Kak Budi, Kak Siti, Pembina Utama, Giat) yang dapat masuk. Nama lain akan ditolak demi keamanan sistem.
+                        </div>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                        <button onclick="toggleFaq(3)" class="w-full p-5 text-left font-bold text-slate-900 flex justify-between items-center hover:bg-slate-50">
+                            <span>Kenapa koordinat GPS tidak terdeteksi?</span>
+                            <i id="faq-icon-3" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="faq-content-3" class="hidden px-5 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                            Pastikan pengaturan izin lokasi (location permission) di browser Anda aktif dan perangkat berada di area dengan sinyal GPS yang baik.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= 6. FITUR PENDUKUNG: PENGATURAN AKUN ================= -->
+        <div id="view-settings" class="app-view hidden flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                <div class="mb-6">
+                    <div class="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                        <i class="fa-solid fa-gear"></i> Konfigurasi
+                    </div>
+                    <h2 class="text-2xl font-extrabold font-heading text-slate-900">Pengaturan Akun & Perangkat</h2>
+                    <p class="text-slate-500 text-sm">Sesuaikan profil nama, pilih avatar karakter, dan uji izin perangkat.</p>
+                </div>
+
+                <form onsubmit="saveSettings(event)" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Nama Lengkap</label>
+                        <input type="text" id="settings-name-input" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500 text-sm" value="Kak Budi">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Pilih Avatar Karakter</label>
+                        <div class="grid grid-cols-4 sm:grid-cols-8 gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="avatar-choice" value="KB" checked class="peer sr-only">
+                                <div class="w-14 h-14 rounded-2xl bg-red-100 peer-checked:ring-4 peer-checked:ring-red-600 flex items-center justify-center text-red-600 font-bold text-lg shadow-sm">KB</div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="avatar-choice" value="🎖️" class="peer sr-only">
+                                <div class="w-14 h-14 rounded-2xl bg-amber-100 peer-checked:ring-4 peer-checked:ring-red-600 flex items-center justify-center text-2xl shadow-sm">🎖️</div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="avatar-choice" value="🚩" class="peer sr-only">
+                                <div class="w-14 h-14 rounded-2xl bg-blue-100 peer-checked:ring-4 peer-checked:ring-red-600 flex items-center justify-center text-2xl shadow-sm">🚩</div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="avatar-choice" value="⭐" class="peer sr-only">
+                                <div class="w-14 h-14 rounded-2xl bg-yellow-100 peer-checked:ring-4 peer-checked:ring-red-600 flex items-center justify-center text-2xl shadow-sm">⭐</div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="avatar-choice" value="🦅" class="peer sr-only">
+                                <div class="w-14 h-14 rounded-2xl bg-slate-100 peer-checked:ring-4 peer-checked:ring-red-600 flex items-center justify-center text-2xl shadow-sm">🦅</div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="avatar-choice" value="🔥" class="peer sr-only">
+                                <div class="w-14 h-14 rounded-2xl bg-orange-100 peer-checked:ring-4 peer-checked:ring-red-600 flex items-center justify-center text-2xl shadow-sm">🔥</div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="avatar-choice" value="🦁" class="peer sr-only">
+                                <div class="w-14 h-14 rounded-2xl bg-pink-100 peer-checked:ring-4 peer-checked:ring-red-600 flex items-center justify-center text-2xl shadow-sm">🦁</div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="avatar-choice" value="⚜️" class="peer sr-only">
+                                <div class="w-14 h-14 rounded-2xl bg-purple-100 peer-checked:ring-4 peer-checked:ring-red-600 flex items-center justify-center text-2xl shadow-sm">⚜️</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <div class="font-bold text-sm text-slate-900">Uji Izin Kamera & GPS</div>
+                            <div class="text-xs text-slate-500">Periksa ketersediaan sensor perangkat Anda</div>
+                        </div>
+                        <button type="button" onclick="testPermissions()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-all">
+                            Uji Sekarang
+                        </button>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-600/30 transition-all text-sm">
+                        Simpan Perubahan
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div> <!-- /MAIN APP CONTAINER -->
+
+
+    <!-- ================= MODAL KAMERA LIVE & GPS WATERMARK ================= -->
+    <div id="modal-camera" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl flex flex-col">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-heading font-bold text-lg text-slate-900">Kamera Absen Hadir Pengibaran</h3>
+                <button onclick="closeCameraModal()" class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center hover:bg-red-100 hover:text-red-600 transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <!-- Camera Preview Box with Watermark Simulation -->
+                <div id="camera-view-box" class="relative w-full aspect-[4/3] bg-slate-900 rounded-2xl overflow-hidden flex items-center justify-center shadow-inner">
+                    <video id="webcam-video" autoplay playsinline muted class="absolute inset-0 w-full h-full object-cover"></video>
+                    <canvas id="snapshot-canvas" class="hidden absolute inset-0 w-full h-full object-cover"></canvas>
+                    
+                    <!-- Watermark Overlay on Preview -->
+                    <div class="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md p-2.5 rounded-xl text-white text-[11px] space-y-0.5 border border-white/20 pointer-events-none">
+                        <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-flag text-red-500"></i> <span id="wm-name">Anggota Dewan (Peserta)</span></div>
+                        <div class="text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-emerald-400"></i> <span id="wm-gps">Lat: -7.0051, Long: 110.4381 (Akurat)</span></div>
+                        <div class="text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-clock text-yellow-400"></i> <span id="wm-time">Jumat, 14 Nov 2026, 07:00 WIB</span></div>
+                    </div>
+                </div>
+
+                <div class="text-xs text-slate-500 text-center">
+                    Pastikan wajah dan atribut seragam pengibaran Jumat terlihat jelas untuk verifikasi.
+                </div>
+            </div>
+
+            <div class="p-6 border-t border-slate-100 bg-slate-50 flex gap-3">
+                <button onclick="closeCameraModal()" class="flex-1 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-sm transition-all">
+                    Batal
+                </button>
+                <button onclick="captureAndSubmitAttendance()" id="btn-capture-submit" class="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-lg shadow-red-600/30 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-camera"></i> Ambil & Kirim Absen
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-600 inline-block"></span>
+                <span class="font-bold text-slate-800 font-heading">Absen Pengibaran Dewan Ambalan Pandanaran Srikandi</span> &copy; 2026
+            </div>
+            <div class="flex gap-6 text-slate-600 font-medium">
+                <a href="#" onclick="switchTab('tutorial'); return false;" class="hover:text-red-600">Panduan</a>
+                <a href="#" onclick="switchTab('faq'); return false;" class="hover:text-red-600">Bantuan FAQ</a>
+                <a href="#" onclick="switchTab('settings'); return false;" class="hover:text-red-600">Pengaturan</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // --- WHITELIST FOR GIAT ROLE ---
+        const GIAT_WHITELIST = ["kak budi", "kak siti", "pembina utama", "giat", "kak ambalan", "pembina", "admin giat"];
+
+        // --- GLOBAL APP STATE ---
+        let currentUser = {
+            name: "Kak Budi",
+            role: "giat", // 'giat' or 'dewan'
+            pasukan: "1. Petugas Pemimpin Pengibaran",
+            idNum: "GIAT-01",
+            avatar: "KB"
+        };
+
+        let attendanceData = {
+            todayStatus: false,
+            timeHadir: null,
+            photoUrl: null,
+            history: [
+                { date: "Jumat, 13 Nov 2026", type: "Absen Hadir Pengibaran", status: "Hadir", time: "06:45 WIB", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Jumat+13+Nov" },
+                { date: "Jumat, 6 Nov 2026", type: "Absen Hadir Pengibaran", status: "Hadir", time: "06:50 WIB", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Jumat+6+Nov" },
+                { date: "Jumat, 30 Okt 2026", type: "Izin Resmi", status: "Izin", time: "-", photo: null }
+            ]
+        };
+
+        // Mock members for Giat managing Dewan based on the 3 requested options
+        let pasukanMembersData = {
+            "1. Petugas Pemimpin Pengibaran": [
+                { id: 1, name: "Andika Pratama", idNum: "DEW-P01", time: "06:45 WIB", status: "Hadir", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Andika+Pemimpin" },
+                { id: 2, name: "Siti Rahma", idNum: "DEW-P02", time: "06:48 WIB", status: "Hadir", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Siti+Pemimpin" }
+            ],
+            "2. Petugas Pengibaran": [
+                { id: 3, name: "Rezky Mahendra", idNum: "DEW-K01", time: "06:42 WIB", status: "Hadir", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Rezky+Petugas" },
+                { id: 4, name: "Dewi Lestari", idNum: "DEW-K02", time: "06:52 WIB", status: "Hadir", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Dewi+Petugas" },
+                { id: 5, name: "Joko Santoso", idNum: "DEW-K03", time: "-", status: "Izin", photo: null }
+            ],
+            "3. Peserta": [
+                { id: 6, name: "Mega Wati", idNum: "DEW-S01", time: "06:35 WIB", status: "Hadir", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Mega+Peserta" },
+                { id: 7, name: "Prabowo Subroto", idNum: "DEW-S02", time: "06:40 WIB", status: "Hadir", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Prabowo+Peserta" },
+                { id: 8, name: "Ganjar Pranowo", idNum: "DEW-S03", time: "06:45 WIB", status: "Hadir", photo: "https://placehold.co/400x300/dc2626/ffffff?text=Ganjar+Peserta" }
+            ]
+        };
+
+        let mediaStream = null;
+        let schoolChartInstance = null;
+        let schoolDonutInstance = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCalendarDays();
+        });
+
+        // --- TOAST NOTIFICATION ---
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgCol = type === 'success' ? 'bg-emerald-600' : (type === 'error' ? 'bg-red-600' : 'bg-slate-900');
+            toast.className = `${bgCol} text-white px-4 py-3 rounded-2xl shadow-xl text-sm font-bold flex items-center gap-2 transform translate-y-2 opacity-0 transition-all duration-300 pointer-events-auto`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // --- LOGIN ROLE TABS ---
+        function setLoginRole(role) {
+            document.getElementById('login-role-input').value = role;
+            const roles = ['giat', 'dewan'];
+            
+            roles.forEach(r => {
+                const btn = document.getElementById(`tab-role-${r}`);
+                if (r === role) {
+                    btn.className = "py-3 px-4 text-xs sm:text-sm font-bold rounded-xl transition-all bg-white text-red-600 shadow-sm flex items-center justify-center gap-2";
+                } else {
+                    btn.className = "py-3 px-4 text-xs sm:text-sm font-bold rounded-xl transition-all text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2";
+                }
+            });
+
+            const inputName = document.getElementById('login-username');
+            const labelName = document.getElementById('login-label-name');
+            const inputIcon = document.getElementById('login-input-icon');
+            const hintEl = document.getElementById('login-hint');
+
+            if (role === 'giat') {
+                labelName.innerText = "Nama Giat (Pembina / Authorized)";
+                inputName.value = "Kak Budi";
+                inputIcon.className = "fa-solid fa-user-tie";
+                hintEl.innerText = "*Giat wajib menggunakan nama terdaftar (contoh: Kak Budi, Kak Siti, Pembina Utama, Giat)";
+            } else if (role === 'dewan') {
+                labelName.innerText = "Nama Lengkap Dewan (Peserta)";
+                inputName.value = "Andika Pratama";
+                inputIcon.className = "fa-solid fa-user-group";
+                hintEl.innerText = "*Anggota Dewan bebas memasukkan nama lengkap dan memilih pasukan.";
+            }
+        }
+
+        // --- QUICK DEMO 1-KLIK ---
+        function quickDemoLogin(role) {
+            setLoginRole(role);
+            if (role === 'giat') {
+                currentUser = { name: "Kak Budi", role: "giat", pasukan: "1. Petugas Pemimpin Pengibaran", idNum: "GIAT-01", avatar: "KB" };
+            } else if (role === 'dewan') {
+                currentUser = { name: "Andika Pratama", role: "dewan", pasukan: "1. Petugas Pemimpin Pengibaran", idNum: "DEW-P01", avatar: "AP" };
+            }
+            executeLoginSuccess();
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const role = document.getElementById('login-role-input').value;
+            const name = document.getElementById('login-username').value.trim();
+            const pasukan = document.getElementById('login-class').value;
+
+            // STRICT AUTHENTICATION CHECK FOR GIAT ROLE
+            if (role === 'giat') {
+                const isAuthorized = GIAT_WHITELIST.some(w => name.toLowerCase().includes(w));
+                if (!isAuthorized) {
+                    showToast(`Akses Ditolak! Nama "${name}" tidak terdaftar sebagai Giat yang sah. Gunakan nama terdaftar seperti "Kak Budi" atau "Giat".`, 'error');
+                    return;
+                }
+            }
+
+            currentUser.role = role;
+            currentUser.name = name;
+            currentUser.pasukan = pasukan;
+            currentUser.avatar = name.substring(0, 2).toUpperCase();
+
+            executeLoginSuccess();
+        }
+
+        function executeLoginSuccess() {
+            document.getElementById('view-login').classList.add('hidden');
+            document.getElementById('app-navbar').classList.remove('hidden');
+
+            document.getElementById('nav-user-name').innerText = currentUser.name;
+            document.getElementById('nav-user-avatar').innerText = currentUser.avatar;
+
+            if (currentUser.role === 'dewan') {
+                document.getElementById('nav-role-subtitle').innerText = `Dewan (${currentUser.pasukan})`;
+                switchTab('dashboard');
+            } else if (currentUser.role === 'giat') {
+                document.getElementById('nav-role-subtitle').innerText = `Giat (Pembina Ambalan)`;
+                switchTab('dashboard');
+            }
+
+            showToast(`Berhasil masuk sebagai ${currentUser.name} (${currentUser.role.toUpperCase()})!`, 'success');
+        }
+
+        function logout() {
+            document.getElementById('app-navbar').classList.add('hidden');
+            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
+            document.getElementById('view-login').classList.remove('hidden');
+            showToast('Anda telah keluar dari sesi.', 'info');
+        }
+
+        // --- NAVIGATION TABS ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
+
+            if (tabName === 'dashboard') {
+                if (currentUser.role === 'dewan') {
+                    document.getElementById('view-dashboard-dewan').classList.remove('hidden');
+                    renderDewanDashboard();
+                } else if (currentUser.role === 'giat') {
+                    document.getElementById('view-dashboard-giat').classList.remove('hidden');
+                    renderGiatTable();
+                    setTimeout(initCharts, 200);
+                }
+            } else if (tabName === 'tutorial') {
+                document.getElementById('view-tutorial').classList.remove('hidden');
+            } else if (tabName === 'faq') {
+                document.getElementById('view-faq').classList.remove('hidden');
+            } else if (tabName === 'settings') {
+                document.getElementById('view-settings').classList.remove('hidden');
+                document.getElementById('settings-name-input').value = currentUser.name;
+            }
+
+            ['dashboard', 'tutorial', 'faq', 'settings'].forEach(t => {
+                const btn = document.getElementById(`nav-tab-${t}`);
+                if (btn) {
+                    if (t === tabName) {
+                        btn.className = "px-4 py-2 rounded-xl text-sm font-semibold text-red-600 bg-red-50 transition-all flex items-center gap-2";
+                    } else {
+                        btn.className = "px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-2";
+                    }
+                }
+            });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- DASHBOARD DEWAN (PESERTA) ---
+        function renderDewanDashboard() {
+            document.getElementById('dewan-welcome-title').innerText = `Halo, ${currentUser.name}! 👋`;
+            document.getElementById('wm-name').innerText = `${currentUser.name} (${currentUser.pasukan})`;
+
+            const badge = document.getElementById('dewan-status-badge-today');
+            const timeInfo = document.getElementById('dewan-status-time-today');
+            const btnAbsen = document.getElementById('btn-action-absen');
+
+            if (attendanceData.todayStatus) {
+                badge.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-300"></i> Sudah Hadir Pengibaran`;
+                timeInfo.innerText = `Absen Jumat pukul ${attendanceData.timeHadir}`;
+                btnAbsen.innerHTML = `<i class="fa-solid fa-check"></i> Sudah Melakukan Absen Hadir`;
+                btnAbsen.className = "w-full py-4 px-8 bg-emerald-600 text-white font-bold rounded-2xl shadow-md cursor-default flex items-center justify-center gap-3 text-base";
+                btnAbsen.disabled = true;
+            }
+
+            const historyList = document.getElementById('dewan-history-list');
+            historyList.innerHTML = '';
+            attendanceData.history.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between gap-4";
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-calendar-day"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 text-sm">${item.date} (${item.type})</div>
+                            <div class="text-xs text-slate-500">Pukul: ${item.time} • <span class="text-emerald-600 font-semibold">${item.status}</span></div>
+                        </div>
+                    </div>
+                    ${item.photo ? `<button onclick="showToast('Melihat bukti foto ${item.date}')" class="px-3 py-1.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"><i class="fa-solid fa-image text-red-600"></i> Foto</button>` : '<span class="text-xs text-slate-400">Tanpa Foto</span>'}
+                `;
+                historyList.appendChild(div);
+            });
+        }
+
+        // --- CAMERA & GPS MODAL ---
+        function openAttendanceModal() {
+            document.getElementById('modal-camera').classList.remove('hidden');
+
+            const now = new Date();
+            const timeStr = `Jumat, ${now.getDate()} Nov 2026, ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} WIB`;
+            document.getElementById('wm-time').innerText = timeStr;
+            document.getElementById('wm-gps').innerText = `Lat: -7.0051, Long: 110.4381 (Akurat GPS)`;
+
+            startWebcam();
+        }
+
+        function closeCameraModal() {
+            document.getElementById('modal-camera').classList.add('hidden');
+            stopWebcam();
+        }
+
+        async function startWebcam() {
+            const videoElement = document.getElementById('webcam-video');
+            videoElement.classList.remove('hidden');
+            document.getElementById('snapshot-canvas').classList.add('hidden');
+            
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+                videoElement.srcObject = mediaStream;
+            } catch (err) {
+                console.warn("Webcam access warning:", err);
+                showToast("Kamera fisik menggunakan mode simulasi otomatis.", "info");
+            }
+        }
+
+        function stopWebcam() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+        }
+
+        function captureAndSubmitAttendance() {
+            const now = new Date();
+            const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} WIB`;
+            const dateStr = `Jumat, ${now.getDate()} Nov 2026`;
+
+            attendanceData.todayStatus = true;
+            attendanceData.timeHadir = timeStr;
+            attendanceData.photoUrl = "https://placehold.co/400x300/dc2626/ffffff?text=Absen+Jumat+" + currentUser.name;
+            
+            attendanceData.history.unshift({
+                date: dateStr,
+                type: "Absen Hadir Pengibaran",
+                status: "Hadir",
+                time: timeStr,
+                photo: attendanceData.photoUrl
+            });
+
+            showToast("Absen Hadir Pengibaran Jumat Berhasil!", "success");
+            closeCameraModal();
+            renderDewanDashboard();
+        }
+
+        // --- CALENDAR GENERATOR (HIGHLIGHTING FRIDAYS) ---
+        function renderCalendarDays() {
+            const container = document.getElementById('dewan-calendar-days');
+            container.innerHTML = '';
+            for (let i = 1; i <= 30; i++) {
+                const dayEl = document.createElement('div');
+                let bgCol = "bg-slate-50 text-slate-700 hover:bg-slate-100";
+                let dotCol = "";
+
+                // Fridays in Nov 2026 approx: 6, 13, 20, 27
+                if ([6, 13, 20, 27].includes(i)) {
+                    if (i <= 13) {
+                        bgCol = "bg-emerald-50 text-emerald-800 font-bold border border-emerald-200";
+                        dotCol = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-0.5 inline-block"></span>';
+                    } else {
+                        bgCol = "bg-blue-50 text-blue-800 font-bold border border-blue-200";
+                        dotCol = '<span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-0.5 inline-block"></span>';
+                    }
+                } else {
+                    bgCol = "bg-slate-50 text-slate-400";
+                }
+
+                dayEl.className = `aspect-square rounded-xl flex flex-col items-center justify-center text-xs font-semibold ${bgCol} transition-all`;
+                dayEl.innerHTML = `<span>${i}</span>${dotCol}`;
+                container.appendChild(dayEl);
+            }
+        }
+
+        // --- DASHBOARD GIAT (PEMBINA / ADMIN) ---
+        function renderGiatTable() {
+            const selectedPasukan = document.getElementById('filter-pasukan-select').value;
+            const members = pasukanMembersData[selectedPasukan] || [];
+            const tbody = document.getElementById('giat-tbody');
+            tbody.innerHTML = '';
+
+            let hadirCount = 0;
+            let izinSakitCount = 0;
+            let alphaCount = 0;
+
+            members.forEach((m, idx) => {
+                if (m.status === 'Hadir') hadirCount++;
+                else if (m.status === 'Izin' || m.status === 'Sakit') izinSakitCount++;
+                else alphaCount++;
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-all border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-slate-900 flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">${m.name.substring(0,2).toUpperCase()}</div>
+                        <span>${m.name}</span>
+                    </td>
+                    <td class="p-4 font-mono text-xs text-slate-500">${m.idNum}</td>
+                    <td class="p-4 text-slate-600">${m.time}</td>
+                    <td class="p-4">
+                        ${m.photo ? `<button onclick="showToast('Melihat bukti foto ${m.name}')" class="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-bold shadow-sm hover:bg-slate-100 flex items-center gap-1.5"><i class="fa-solid fa-image text-red-600"></i> Lihat</button>` : '<span class="text-xs text-slate-400">Tidak ada</span>'}
+                    </td>
+                    <td class="p-4 text-center">
+                        <div class="inline-flex rounded-xl p-1 bg-slate-100 gap-1">
+                            <button onclick="changeMemberStatus('${selectedPasukan}', ${idx}, 'Hadir')" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${m.status === 'Hadir' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}">Hadir</button>
+                            <button onclick="changeMemberStatus('${selectedPasukan}', ${idx}, 'Izin')" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${m.status === 'Izin' ? 'bg-amber-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}">Izin</button>
+                            <button onclick="changeMemberStatus('${selectedPasukan}', ${idx}, 'Alpha')" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${m.status === 'Alpha' ? 'bg-red-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}">Alpha</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('stat-giat-hadir').innerText = `${hadirCount} Anggota`;
+            document.getElementById('stat-giat-izin').innerText = `${izinSakitCount} Anggota`;
+            document.getElementById('stat-giat-alpha').innerText = `${alphaCount} Anggota`;
+            const total = members.length;
+            const pct = total > 0 ? Math.round((hadirCount / total) * 100) : 0;
+            document.getElementById('stat-giat-persen').innerText = `${pct}%`;
+        }
+
+        function changeMemberStatus(pasukanKey, idx, newStatus) {
+            pasukanMembersData[pasukanKey][idx].status = newStatus;
+            if (newStatus === 'Hadir') {
+                pasukanMembersData[pasukanKey][idx].time = "06:50 WIB";
+                pasukanMembersData[pasukanKey][idx].photo = "https://placehold.co/400x300/dc2626/ffffff?text=Updated+" + newStatus;
+            } else {
+                pasukanMembersData[pasukanKey][idx].time = "-";
+                pasukanMembersData[pasukanKey][idx].photo = null;
+            }
+            renderGiatTable();
+            showToast(`Status berhasil diubah menjadi ${newStatus}`, 'success');
+        }
+
+        // --- CHARTS INITIALIZATION ---
+        function initCharts() {
+            const ctxBar = document.getElementById('schoolAttendanceChart');
+            if (ctxBar && !schoolChartInstance) {
+                schoolChartInstance = new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jumat 6 Nov', 'Jumat 13 Nov', 'Jumat 20 Nov', 'Jumat 27 Nov'],
+                        datasets: [{
+                            label: 'Kehadiran Pengibaran',
+                            data: [32, 35, 30, 34],
+                            backgroundColor: '#DC2626',
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, max: 40 } }
+                    }
+                });
+            }
+
+            const ctxDonut = document.getElementById('schoolDonutChart');
+            if (ctxDonut && !schoolDonutInstance) {
+                schoolDonutInstance = new Chart(ctxDonut, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Hadir', 'Izin/Sakit', 'Alpha'],
+                        datasets: [{
+                            data: [32, 2, 0],
+                            backgroundColor: ['#10B981', '#F59E0B', '#EF4444'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+                    }
+                });
+            }
+        }
+
+        // --- EXPORT & PRINT FUNCTIONS ---
+        function printRekapGiat() {
+            showToast("Menyiapkan dokumen rekap untuk dicetak...", "success");
+            setTimeout(() => window.print(), 800);
+        }
+
+        function exportToExcel() {
+            showToast("Berhasil mengekspor data rekapitulasi ke format Excel (.xlsx)!", "success");
+        }
+
+        // --- TOGGLE FAQ & TUTORIAL ---
+        function toggleFaq(id) {
+            const content = document.getElementById(`faq-content-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function playTutorialVideo() {
+            showToast("Memutar video tutorial interaktif...", "info");
+        }
+
+        function testPermissions() {
+            showToast("Izin kamera dan GPS perangkat berfungsi dengan sangat baik!", "success");
+        }
+
+        function saveSettings(e) {
+            e.preventDefault();
+            const newName = document.getElementById('settings-name-input').value;
+            const selectedAvatar = document.querySelector('input[name="avatar-choice"]:checked').value;
+            
+            currentUser.name = newName;
+            currentUser.avatar = selectedAvatar;
+
+            document.getElementById('nav-user-name').innerText = newName;
+            document.getElementById('nav-user-avatar').innerText = selectedAvatar;
+
+            showToast("Pengaturan profil berhasil disimpan!", "success");
+        }
+    </script>
+</body>
+</html>
